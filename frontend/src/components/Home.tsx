@@ -30,6 +30,10 @@ const ImagesContainer = styled.div`
   justify-content: center;
 `;
 
+const StyledImage = styled.img`
+  transform: scaleX(-1);
+`;
+
 export default function Home() {
   const [play, setPlay] = useState(false);
   const predictionRef = useRef<HTMLDivElement>(null);
@@ -112,7 +116,7 @@ export default function Home() {
               Play
             </Button>
           )}
-          <img ref={opponentRef} alt="opponent" width={0} height={0} />
+          <StyledImage ref={opponentRef} alt="opponent" width={0} height={0} />
         </ImagesContainer>
         {message && <h3>{message}</h3>}
         <br />
