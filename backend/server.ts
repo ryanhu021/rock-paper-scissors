@@ -72,8 +72,8 @@ io.on("connection", (socket: Socket) => {
           `You lose! ${playerTwoChoice} beats ${playerOneChoice}`
         );
       }
-      playerOne?.emit("image", playerOneImage);
-      playerTwo?.emit("image", playerTwoImage);
+      playerOne?.emit("image", playerTwoImage);
+      playerTwo?.emit("image", playerOneImage);
     }
   };
 
