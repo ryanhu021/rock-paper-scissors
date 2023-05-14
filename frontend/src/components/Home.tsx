@@ -23,11 +23,20 @@ const CenterContainer = styled.div`
   height: 100%;
 `;
 
+const ImagesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
 export default function Home() {
   const [play, setPlay] = useState(false);
   const predictionRef = useRef<HTMLDivElement>(null);
   const [status, setStatus] = React.useState("");
   const [message, setMessage] = React.useState("");
+  const opponentRef = useRef<HTMLImageElement>(null);
+
   const socket = io(process.env.REACT_APP_SERVER_URL!, { autoConnect: false });
 
   const handlePlay = () => {
@@ -60,6 +69,8 @@ export default function Home() {
         if (count === -1) {
           clearInterval(interval);
           socket.emit("choice", predictionRef.current!.innerHTML.toLowerCase());
+          const canvas = document.getElementsByTagName("canvas")[0]!;
+          socket.emit("image", canvas.toDataURL());
           setMessage("");
         }
       }, 1000);
@@ -69,7 +80,16 @@ export default function Home() {
     });
     socket.on("result", (msg) => {
       setStatus(msg);
-      socket.disconnect();
+      setTimeout(() => {
+        socket.disconnect();
+      }, 5000);
+    });
+    socket.on("image", (msg) => {
+      opponentRef.current!.src = msg;
+      opponentRef.current!.width = 400;
+      opponentRef.current!.height = 400;
+      opponentRef.current!.style.marginLeft = "16px";
+      opponentRef.current!.style.marginBottom = "29.6px";
     });
     socket.on("error", (msg) => {
       setMessage(msg);
@@ -84,13 +104,16 @@ export default function Home() {
       <CenterContainer>
         <h3>{status}</h3>
         <br />
-        {play ? (
-          <Play predictionRef={predictionRef} />
-        ) : (
-          <Button variant="primary" onClick={handlePlay}>
-            Play
-          </Button>
-        )}
+        <ImagesContainer>
+          {play ? (
+            <Play predictionRef={predictionRef} />
+          ) : (
+            <Button variant="primary" onClick={handlePlay}>
+              Play
+            </Button>
+          )}
+          <img ref={opponentRef} alt="opponent" width={0} height={0} />
+        </ImagesContainer>
         {message && <h3>{message}</h3>}
         <br />
         {play && (

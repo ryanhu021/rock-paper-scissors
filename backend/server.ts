@@ -19,6 +19,9 @@ let playerTwo: Socket | null = null;
 let playerOneChoice: string | null = null;
 let playerTwoChoice: string | null = null;
 
+let playerOneImage: string | null = null;
+let playerTwoImage: string | null = null;
+
 io.on("connection", (socket: Socket) => {
   const checkResults = () => {
     console.log(`Player One choice: ${playerOneChoice}`);
@@ -69,6 +72,8 @@ io.on("connection", (socket: Socket) => {
           `You lose! ${playerTwoChoice} beats ${playerOneChoice}`
         );
       }
+      playerOne?.emit("image", playerOneImage);
+      playerTwo?.emit("image", playerTwoImage);
     }
   };
 
@@ -88,7 +93,19 @@ io.on("connection", (socket: Socket) => {
       checkResults();
       playerOneChoice = null;
       playerTwoChoice = null;
-    }, 1000);
+    }, 2000);
+  };
+
+  const onImage = (image: string) => {
+    if (playerOne === socket) {
+      playerOneImage = image;
+      console.log(`Player One chose ${image}`);
+      playerOne.off("image", onImage);
+    } else if (playerTwo === socket) {
+      playerTwoImage = image;
+      console.log(`Player Two chose ${image}`);
+      playerTwo.off("image", onImage);
+    }
   };
 
   const startGame = () => {
@@ -126,6 +143,7 @@ io.on("connection", (socket: Socket) => {
   }
 
   socket.on("choice", onChoice);
+  socket.on("image", onImage);
 
   socket.on("disconnect", () => {
     console.log(`User disconnected: ${socket.id}`);
