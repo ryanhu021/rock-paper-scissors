@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.ts",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx . && prettier --check .",
-    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx . --fix && prettier --write ."
+    "lint-fix": "eslint --ext .js,.jsx,.ts,.tsx . --fix && prettier --write .",
+    "build": "tsc",
+    "start": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
