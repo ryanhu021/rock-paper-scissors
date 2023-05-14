@@ -89,13 +89,20 @@ io.on("connection", (socket: Socket) => {
       console.log(`Player Two chose ${choice}`);
       playerTwo.off("choice", onChoice);
     }
-    setTimeout(() => {
-      checkResults();
-      playerOneChoice = null;
-      playerTwoChoice = null;
-      playerOneImage = null;
-      playerTwoImage = null;
-    }, 2000);
+    if (
+      playerOneChoice &&
+      playerTwoChoice &&
+      playerOneImage &&
+      playerTwoImage
+    ) {
+      setTimeout(() => {
+        checkResults();
+        playerOneChoice = null;
+        playerTwoChoice = null;
+        playerOneImage = null;
+        playerTwoImage = null;
+      }, 2000);
+    }
   };
 
   const onImage = (image: string) => {
@@ -107,6 +114,20 @@ io.on("connection", (socket: Socket) => {
       playerTwoImage = image;
       console.log(`Player Two chose ${image}`);
       playerTwo.off("image", onImage);
+    }
+    if (
+      playerOneChoice &&
+      playerTwoChoice &&
+      playerOneImage &&
+      playerTwoImage
+    ) {
+      setTimeout(() => {
+        checkResults();
+        playerOneChoice = null;
+        playerTwoChoice = null;
+        playerOneImage = null;
+        playerTwoImage = null;
+      }, 2000);
     }
   };
 
