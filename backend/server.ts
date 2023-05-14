@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import http from "http";
-import { set } from "mongoose";
 import { Server, Socket } from "socket.io";
 
 if (process.env.NODE_ENV !== "production") {
