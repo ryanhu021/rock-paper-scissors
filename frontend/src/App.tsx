@@ -1,15 +1,15 @@
 import React from "react";
-import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <div>Hello world!</div>,
-  },
-]);
+import Home from "./components/Home";
 
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Home />,
+    },
+  ]);
+
   return <RouterProvider router={router} />;
 }
 
