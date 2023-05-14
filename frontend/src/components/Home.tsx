@@ -29,7 +29,9 @@ export default function Home() {
   const [status, setStatus] = React.useState("");
   const [message, setMessage] = React.useState("");
   const socket = io(
-    process.env.SERVER_URL ? process.env.SERVER_URL : "http://localhost:3001",
+    process.env.REACT_APP_SERVER_URL
+      ? process.env.REACT_APP_SERVER_URL
+      : "http://localhost:3001",
     { autoConnect: false }
   );
 
