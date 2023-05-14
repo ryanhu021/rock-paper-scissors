@@ -82,7 +82,7 @@ export default function Home() {
       setStatus(msg);
       setTimeout(() => {
         socket.disconnect();
-      }, 5000);
+      }, 10000);
     });
     socket.on("image", (msg) => {
       opponentRef.current!.src = msg;

@@ -93,6 +93,8 @@ io.on("connection", (socket: Socket) => {
       checkResults();
       playerOneChoice = null;
       playerTwoChoice = null;
+      playerOneImage = null;
+      playerTwoImage = null;
     }, 2000);
   };
 
