@@ -12,7 +12,7 @@ export default function Play({ predictionRef }) {
         interval={100}
         onPredict={setPredictions}
         info={false}
-        model_url="https://teachablemachine.withgoogle.com/models/lNMB_dE--/"
+        model_url={process.env.REACT_APP_MODEL_URL}
       />
       {!!predictions &&
         predictions
